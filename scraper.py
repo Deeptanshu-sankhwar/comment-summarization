@@ -1,4 +1,4 @@
-import pandas as pandas
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 import argparse
@@ -32,10 +32,12 @@ def scrape():
     usernames.pop(0)
 
     Dict = {}   #dictionary to map user name to comment
-
+    
     for _, (usr,com) in enumerate(zip(usernames, comments)):
         Dict[usr] = com
 
+    db = pd.DataFrame({'Blog' : args.url[47 : -1].replace('-', ' ').capitalize(), 'User' : usernames, 'Comment' : comments})
+    db.to_csv('UserCommentDatabase.csv')
     return Dict
 
 if __name__ == '__main__':
