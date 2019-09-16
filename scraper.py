@@ -14,9 +14,13 @@ def scrape(url):
     comment_elem = soup.find_all(attrs = {'class' : 'comment-body'})
     user_elem = soup.find_all(attrs = {'class' : 'fn'})
     for item in comment_elem:   #store comments of users
-        com_text = item.find_next('p').text
-        comments.append(com_text)
+        com_text = item.find_all('p')
+        text = ''
+        for p in com_text:
+            text = text + p.text + ' '
 
+        comments.append(text)
+    
     for user in user_elem:  #store name of users
         usernames.append(user.text)
         
@@ -62,7 +66,7 @@ def scrapeParent():
             comment_count.append(num.text)
         
         for _, (link, count) in enumerate(zip(bookmarks, comment_count)):
-            if int(str(count)) > 20 :
+            if int(str(count)) > 70 :
                 scrape(link)
 
 
