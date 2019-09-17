@@ -8,17 +8,17 @@ users = []
 
 with open ('database.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter = ',')
+    i = 0
     for row in readcsv:
         blog_post = row[1]
-        user_comment.setdefault(row[2], []).append(row[3])
-        users.append(row[2])   
-
+        user_comment.setdefault(row[2], []).append(" " + row[3].lower())    #ensuring every comment begins with a space to maintain ease in reader_measure & neglect differentiation on the basis of cases of word
+        users.append(row[2])
+        
 users = list(dict.fromkeys(users))
 users.pop(0)
-
 for user in users:
     user_comment[user] = list(dict.fromkeys(user_comment[user]))
-
+    user_comment[user].pop(0)
 
 def get_weights():
     
@@ -54,11 +54,33 @@ def reader_authority(reader):
     sum = 0
     num = users.index(reader)
     weights = get_weights()
+
+    #setting initial probability distribution
+    d = 0.31    #Bayesian value of damping factor
+    PR = [round(Decimal(1/mod_r), 4)] * mod_r
     for i in range(len(users)):
         if i != num:
-            sum = sum + weights[num][i]
+            sum = sum + weights[num][i] * PR[i]
 
-    A = Decimal((1/mod_r)) + Decimal(sum)
-    return A
+    A = Decimal(d) * Decimal((1/mod_r)) + Decimal(1-d) * Decimal(sum)
+    return round(A, 10)
 
+def count_occurances(comment, word):
+    a = comment.split(" ")
+    count = 0
+    for i in range(len(a)):
+        if (word == a[i]):
+            count = count + 1
+    return count
+
+def reader_measure(word, reader):
+    word = word.lower()
+    res = [k for k in user_comment[reader] if (' ' + word + ' ') in k]
+    word_count = 0
+    for i in range(len(res)):
+        word_count = word_count + count_occurances(res[i], word)
+    RM = reader_authority(reader) * word_count
+    return RM
+
+# print(reader_measure('in', 'Kyle Pflug [MSFT]'))
 # print(reader_authority('Kyle Pflug [MSFT]'))
