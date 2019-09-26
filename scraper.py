@@ -9,10 +9,14 @@ def scrape(url):
     soup = BeautifulSoup(html_page.text, 'html.parser')  #parse object
 
     #reading text
-    comments = []
-    usernames = []
+    comments = []   #contains every comment
+    usernames = []  #contains every user who commented
+
+    #search for comment elements with class comment-body in the html page
     comment_elem = soup.find_all(attrs = {'class' : 'comment-body'})
+    #search for usernames elements with class comment-body in the html page
     user_elem = soup.find_all(attrs = {'class' : 'fn'})
+    
     for item in comment_elem:   #store comments of users
         com_text = item.find_all('p')
         text = ''
@@ -28,9 +32,11 @@ def scrape(url):
 
     Dict = {}   #dictionary to map user name to comment
     
+    #Dict maps every user to its comment
     for _, (usr,com) in enumerate(zip(usernames, comments)):
         Dict[usr] = com
 
+    #saving data into csv file
     db = pd.DataFrame({'Blog' : url[47 : -1].replace('-', ' ').capitalize(), 'User' : usernames, 'Comment' : comments})
     if Path("database.csv").is_file():
         with open ('database.csv', 'a') as f:
@@ -47,6 +53,7 @@ def scrapeParent():
         help = 'IEBlog database till a page number'
         )
     args = parser.parse_args()
+
     for i in range(int(args.page)):
         response = requests.get(url + str(i+1) + '/')
 
@@ -65,6 +72,7 @@ def scrapeParent():
         for num in nums:
             comment_count.append(num.text)
         
+        #threshold for comment extraction of a given blog    
         for _, (link, count) in enumerate(zip(bookmarks, comment_count)):
             if int(str(count)) > 70 :
                 scrape(link)
