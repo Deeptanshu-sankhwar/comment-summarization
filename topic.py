@@ -9,7 +9,6 @@ comments = []
 
 with open('database.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter = ',')
-    i = 0
     for row in readcsv:
         comments.append(row[3].lower().strip())
 comments.pop(0)

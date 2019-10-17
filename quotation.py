@@ -1,6 +1,7 @@
 #Quotation Graph
 import csv
 from decimal import Decimal
+from collections import Counter
 
 quotation_graph = dict()
 comments = []
@@ -20,7 +21,41 @@ for j in range(len(comments)):
             if (str(comment_j).find(str(comment_i))) != -1:
                 quotation_graph.setdefault(comment_j, []).append(comment_i)
 
-# def quotation_degree()    #to be completed
+def get_weights():
+
+    weights = [[0 for x in range(len(comments))] for y in range(len(comments))]
+
+    for i in range(len(comments)):
+        for j in range(len(comments)):
+            if i != j:
+
+                pointed = quotation_graph.get(comments[i])
+
+                if (pointed is not None) and (comments[j] in pointed):
+                    n = Counter(pointed)
+                    weights[i][j] = Decimal(n[comments[j]]/len(pointed))
+                    weights[i][j] = round(weights[i][j], 4)
+
+    return weights
+
+
+
+def quotation_degree(comment):
+    comment = comment.lower().strip
+    mod_r = len(comments)
+    sum = 0
+    num = comments.index(comment)
+    weights = get_weights()
+
+    #setting initial probability distribution function
+    #No damping exists in the paper for quotaion_degree
+    PR = [round(Decimal(1/mod_r), 4)] * mod_r
+    for i in range(len(comments)):
+        if i != num:
+            sum = sum + weights[num][i] * PR[i]
+
+    D = Decimal((1/mod_r)) + Decimal(sum)
+    return round(D, 10)
 
 
 #to count total occurances of a given word in a comment
