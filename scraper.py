@@ -44,6 +44,25 @@ def scrape(url):
     else:
         db.to_csv('database.csv') 
 
+
+def scrape_blog(url):
+    html_page = requests.get(url)
+    soup = BeautifulSoup(html_page.text, 'html.parser')
+
+    blog = soup.find_all(attrs = {'class' : 'entry-content single'})
+    
+    file = open(url[47 : -1] + '.txt', 'w+')
+
+    for para in blog:
+        para_text = para.find_all(['p', 'li'])
+        text = ''
+        for p in para_text:
+            text = text + p.text + ' '
+        file.write(text)
+
+    file.close()
+
+
 def scrapeParent():
     url = 'https://blogs.msdn.microsoft.com/ie/page/'
     parser = argparse.ArgumentParser()
@@ -52,30 +71,44 @@ def scrapeParent():
         '--page',
         help = 'IEBlog database till a page number'
         )
+    parser.add_argument(
+        '-b',
+        '--blog',
+        action = 'store_true',
+        help = 'Scrape blog in a txt file'
+        )
     args = parser.parse_args()
 
-    for i in range(int(args.page)):
-        response = requests.get(url + str(i+1) + '/')
+    blog_url = []
+    if args.page:
+        for i in range(int(args.page)):
+            response = requests.get(url + str(i) + '/')
 
-        data = response.text
-        soup = BeautifulSoup(data, 'lxml')
-        tags = soup.find_all('a', attrs = {'rel' : 'bookmark'})
-        bookmarks = []
-        for tag in tags:
-            bookmarks.append(tag.get('href'))
-        if i == 0:
-            bookmarks.pop(0)
-        
-        comment_count = []
-        nums = soup.find_all(attrs = {'class' : 'comments-link'})
-        
-        for num in nums:
-            comment_count.append(num.text)
-        
-        #threshold for comment extraction of a given blog    
-        for _, (link, count) in enumerate(zip(bookmarks, comment_count)):
-            if int(str(count)) > 70 :
-                scrape(link)
+            data = response.text
+            soup = BeautifulSoup(data, 'lxml')
+            tags = soup.find_all('a', attrs = {'rel' : 'bookmark'})
+            bookmarks = []
+            for tag in tags:
+                bookmarks.append(tag.get('href'))
+            if i == 0:
+                bookmarks.pop(0)
+            
+            comment_count = []
+            nums = soup.find_all(attrs = {'class' : 'comments-link'})
+            
+            for num in nums:
+                comment_count.append(num.text)
+            if i != 0:
+            #threshold for comment extraction of a given blog    
+                for _, (link, count) in enumerate(zip(bookmarks, comment_count)):
+                    if int(str(count)) > 70 :
+                        blog_url.append(link)
+                        scrape(link)
+
+
+    if args.blog:
+        for url in blog_url:
+            scrape_blog(url)
 
 
 if __name__ == '__main__':

@@ -46,7 +46,10 @@ def cosine_similarity(thread, text):
     for i in range(len(union_vector)):
         c += l1[i]*l2[i]
 
-    cosine = c / float((sum(l1)*sum(l2))**0.5)
+    if (sum(l1)*sum(l2))**0.5 != 0:
+        cosine = c / float((sum(l1)*sum(l2))**0.5)
+    else:
+        return 0, len(thread_list)
 
     return cosine, len(thread_list)
 
