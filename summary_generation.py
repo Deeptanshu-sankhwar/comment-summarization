@@ -4,7 +4,9 @@ from representative_score import rep_score_sentence
 import config
 import os
 import nltk.data
+import time
 
+start_time = time.time()
 #fetching scraped txt blogs
 blogs = []
 for file in os.listdir():
@@ -19,11 +21,15 @@ for blog in blogs:
     sentences = tokenizer.tokenize(data)
     #successfully split blog into smart sentences
 
+    file = open("sbs_score.txt", "w+")
     for sentence in sentences:
         sbs_score = rep_score_sentence(sentence, config.tau)
+        file.write(sbs_score)
         if sbs_score > config.selection_threshold:
             summary.write(sentence)
 
     summary.close()
     file.close()
 
+end_time = time.time()
+print("Execution time : " + str(end_time - start_time))

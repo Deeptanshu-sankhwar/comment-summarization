@@ -21,7 +21,7 @@ def rep_score_sentence(sentence, tau):
     rep_sentence = 0
     for word in words:
         print(word)
-        rep_sentence = rep_score_word(word) ** tau
+        rep_sentence = rep_sentence + rep_score_word(word) ** Decimal(tau)
 
     rep_sentence = rep_sentence ** Decimal(1/tau)
     rep_sentence = Decimal(rep_sentence/word_count)
