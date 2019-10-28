@@ -3,6 +3,7 @@ import csv
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from decimal import Decimal
+import config
 
 topic_cluster = dict()
 comments = []
@@ -61,7 +62,7 @@ for i in range(len(comments)):
         if j != i:
             text = comments[j]
             similarity, count = cosine_similarity(thread, text)
-            if similarity >= 0.5:   #similarity metric can be altered
+            if similarity >= config.topic_similarity:   #similarity metric can be altered
                 topic_cluster.setdefault(thread, []).append(text)
     word_count += count
 
@@ -91,12 +92,14 @@ def count_occurances(comment, word):
     return count
 
 #return topic measure of a word
-def topic_measure(word, thread):
-    T_tu = topic_importance(thread)
-    count = 0
-    for comment in topic_cluster[thread]:
-        count += count_occurances(comment, word)
-    print(count)
-    TM = T_tu * count
+def topic_measure(word):
+    word =  word.lower()
+    TM = 0
+    for thread in topic_cluster.keys():
+        T_tu = topic_importance(thread)
+        count = 0
+        for comment in topic_cluster[thread]:
+            count += count_occurances(comment, word)
+        TM = TM + T_tu * count
 
-    return TM 
+    return (TM/len(comments)) 

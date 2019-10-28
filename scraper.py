@@ -81,8 +81,8 @@ def scrapeParent():
 
     blog_url = []
     if args.page:
-        for i in range(int(args.page)):
-            response = requests.get(url + str(i) + '/')
+        for i in range(2):
+            response = requests.get(url + str(int(args.page)) + '/')
 
             data = response.text
             soup = BeautifulSoup(data, 'lxml')

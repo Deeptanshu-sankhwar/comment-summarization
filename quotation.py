@@ -9,7 +9,7 @@ comments = []
 with open('database.csv') as csvfile:
     readcsv = csv.reader(csvfile, delimiter = ',')
     for row in readcsv:
-        comments.append(row[3].lower().strip)
+        comments.append(row[3].lower().strip())
 comments.pop(0)
 
 #build the quoation graph Cj -> Ci
@@ -41,7 +41,7 @@ def get_weights():
 
 
 def quotation_degree(comment):
-    comment = comment.lower().strip
+    comment = comment.lower().strip()
     mod_r = len(comments)
     sum = 0
     num = comments.index(comment)
@@ -71,13 +71,14 @@ def count_occurances(comment, word):
             count = count + 1
     return count
 
-def quotation_measure(word, sentence):
-    D_ci = quotation_degree(sentence)
-    count = count_occurances(sentence, word)
-    QM = D_ci * count
-
-    return QM
+def quotation_measure(word):
+    word = word.lower()
+    QM = 0
     
+    for sentence in comments:
+        D_ci = quotation_degree(sentence)
+        count = count_occurances(sentence, word)
+        QM = QM + D_ci * count
 
-
-
+    return (QM/len(comments))
+    

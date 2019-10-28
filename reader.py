@@ -73,14 +73,17 @@ def count_occurances(comment, word):
             count = count + 1
     return count
 
-def reader_measure(word, reader):
+def reader_measure(word):
     word = word.lower()
-    res = [k for k in user_comment[reader] if (' ' + word + ' ') in k]
-    word_count = 0
-    for i in range(len(res)):
-        word_count = word_count + count_occurances(res[i], word)
-    RM = reader_authority(reader) * word_count
-    return RM
+    RM = 0
+    for reader in users:
+        res = [k for k in user_comment[reader] if (' ' + word + ' ') in k]
+        word_count = 0
+        for i in range(len(res)):
+            word_count = word_count + count_occurances(res[i], word)
+        RM = RM + reader_authority(reader) * word_count
+    
+    return (RM/len(users))
 
 # print(reader_measure('in', 'Kyle Pflug [MSFT]'))
 # print(reader_authority('Kyle Pflug [MSFT]'))
