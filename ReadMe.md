@@ -1,4 +1,4 @@
-Comments-Oriented Blog Summarization by SentenceExtraction
+Comments-Oriented Blog Summarization by Sentence Extraction
 
 ## Getting Started
 ```
