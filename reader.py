@@ -21,8 +21,9 @@ for user in users:
     user_comment[user].pop(0)
 
 def get_weights():
-    
-    #search for presence of other reader in a reader's comment
+    """
+    Search for presence of other reader in a reader's comment and return a genrated metric pointing to the relation
+    """
     reader_graph = dict()
 
     for i in range(len(users)):
@@ -50,6 +51,9 @@ def get_weights():
     return weights
 
 def reader_authority(reader):
+    """
+    Implementing PageRank algorithm to get the reader authority value for a given reader who commented on the blog post.
+    """
     mod_r = len(users)
     sum = 0
     num = users.index(reader)
@@ -66,6 +70,9 @@ def reader_authority(reader):
     return round(A, 10)
 
 def count_occurances(comment, word):
+    """
+    A helper function to get number of words in a comment.
+    """
     a = comment.split(" ")
     count = 0
     for i in range(len(a)):
@@ -74,6 +81,9 @@ def count_occurances(comment, word):
     return count
 
 def reader_measure(word):
+    """
+    This method takes in a word and returns the expected value of reader measures for the word from all the readers commenting on the blog post.
+    """
     word = word.lower()
     RM = 0
     for reader in users:
@@ -84,6 +94,3 @@ def reader_measure(word):
         RM = RM + reader_authority(reader) * word_count
     
     return (RM/len(users))
-
-# print(reader_measure('in', 'Kyle Pflug [MSFT]'))
-# print(reader_authority('Kyle Pflug [MSFT]'))

@@ -22,7 +22,9 @@ for j in range(len(comments)):
                 quotation_graph.setdefault(comment_j, []).append(comment_i)
 
 def get_weights():
-
+    """
+    Search for presence of other comment quoted in a reader's comment and return a genrated metric pointing to the relation
+    """
     weights = [[0 for x in range(len(comments))] for y in range(len(comments))]
 
     for i in range(len(comments)):
@@ -41,6 +43,9 @@ def get_weights():
 
 
 def quotation_degree(comment):
+    """
+    Implementing PageRank algorithm to get the quotation degree for a given comment mentioned in some other comment on the blog post.
+    """
     comment = comment.lower().strip()
     mod_r = len(comments)
     sum = 0
@@ -58,8 +63,10 @@ def quotation_degree(comment):
     return round(D, 10)
 
 
-#to count total occurances of a given word in a comment
 def count_occurances(comment, word):
+    """
+    A helper function to count the number of words in a comment.
+    """
     comment = comment.replace('?', ' ')
     comment = comment.replace('.', ' ')
     comment = comment.replace('-', ' ')
@@ -72,6 +79,9 @@ def count_occurances(comment, word):
     return count
 
 def quotation_measure(word):
+    """
+    This method takes in a word and returns the expected value of quotation measures for the word from all the comments written on the blog post.
+    """
     word = word.lower()
     QM = 0
     

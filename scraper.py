@@ -5,6 +5,10 @@ import argparse
 from pathlib import Path
 
 def scrape(url):
+    """
+    Accepts a link and creates/appends a csv databse consisting of information of user poitning to his/her comment alongwith the underlyting Blog name.
+    """
+
     html_page = requests.get(url)
     soup = BeautifulSoup(html_page.text, 'html.parser')  #parse object
 
@@ -46,6 +50,9 @@ def scrape(url):
 
 
 def scrape_blog(url):
+    """
+    Accepts a link and scrapes the Blog texts into a seperate text file for all the blogs uptil which the limit is specified.
+    """
     html_page = requests.get(url)
     soup = BeautifulSoup(html_page.text, 'html.parser')
 
@@ -64,6 +71,9 @@ def scrape_blog(url):
 
 
 def scrapeParent():
+    """
+    This module pre-processes the blogs in order to scrape them through methods scrape() and scrape_blog()
+    """
     url = 'https://blogs.msdn.microsoft.com/ie/page/'
     parser = argparse.ArgumentParser()
     parser.add_argument(

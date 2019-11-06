@@ -16,8 +16,11 @@ comments.pop(0)
 
 word_count = 0 #sum of total number of words in all comments
 
-#to get cosine similarity between two comments
 def cosine_similarity(thread, text):
+    """
+    Get cosine similarity between two comments.
+    """
+
     #tokenize comment into words
     thread_list = word_tokenize(thread)
     text_list = word_tokenize(text)
@@ -66,8 +69,10 @@ for i in range(len(comments)):
                 topic_cluster.setdefault(thread, []).append(text)
     word_count += count
 
-#returns importance metric of a built thread in a topic clutser
 def topic_importance(thread):
+    """
+    Returns topic importance value of a built thread in a topic clutser.
+    """
     metric = 0
     thread = thread.lower().strip()
     for comment in topic_cluster[thread]:
@@ -78,8 +83,10 @@ def topic_importance(thread):
 
     return round(T, 10)
 
-#to count total occurances of a given word in a comment
 def count_occurances(comment, word):
+    """
+    A helper function to get the number of words in a comment.
+    """
     comment = comment.replace('?', ' ')
     comment = comment.replace('.', ' ')
     comment = comment.replace('-', ' ')
@@ -91,8 +98,10 @@ def count_occurances(comment, word):
             count = count + 1
     return count
 
-#return topic measure of a word
 def topic_measure(word):
+    """
+    This method takes in a word and returns the expected value of topic measures for the word from all the topic clusters constructed in the given blog.
+    """
     word =  word.lower()
     TM = 0
     for thread in topic_cluster.keys():
