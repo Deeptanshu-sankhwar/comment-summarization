@@ -1,4 +1,3 @@
-#constructing reader graph
 import csv
 from collections import Counter
 from decimal import Decimal

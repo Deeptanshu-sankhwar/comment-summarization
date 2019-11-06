@@ -1,4 +1,3 @@
-#Quotation Graph
 import csv
 from decimal import Decimal
 from collections import Counter
