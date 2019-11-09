@@ -23,8 +23,9 @@ for blog in blogs:
 
     file = open("sbs_score.txt", "w+")
     for sentence in sentences:
+        print("Old sentence : " + sentence)
         sbs_score = rep_score_sentence(sentence, config.tau)
-        file.write(str(sbs_score))
+        file.write(str(sbs_score) + '\n')
         if sbs_score > config.selection_threshold:
             summary.write(sentence)
 

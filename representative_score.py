@@ -5,6 +5,8 @@ from quotation import quotation_measure
 from topic import topic_measure
 import config
 from decimal import Decimal
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 def rep_score_word(word):
     #normalising score
@@ -15,8 +17,12 @@ def rep_score_word(word):
     return (reader_measure(word.lower()) * Decimal(config.alpha)) + (quotation_measure(word.lower()) * Decimal(config.beta)) + (topic_measure(word.lower()) * Decimal(config.gamma))
 
 def rep_score_sentence(sentence, tau):
-    print(sentence)
-    words = sentence.split(' ')
+    keywords = word_tokenize(sentence)
+    stop_words = stopwords.words('english')
+    words = [w for w in keywords if not w in stop_words]
+
+    print("New sentence : ")
+    print(words)
     word_count = len(words)
     rep_sentence = 0
     for word in words:

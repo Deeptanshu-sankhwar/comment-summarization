@@ -84,7 +84,7 @@ def reader_measure(word):
     This method takes in a word and returns the expected value of reader measures for the word from all the readers commenting on the blog post.
     """
     word = word.lower()
-    RM = 0
+    RM = Decimal(0)
     for reader in users:
         res = [k for k in user_comment[reader] if (' ' + word + ' ') in k]
         word_count = 0

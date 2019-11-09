@@ -102,7 +102,7 @@ def topic_measure(word):
     This method takes in a word and returns the expected value of topic measures for the word from all the topic clusters constructed in the given blog.
     """
     word =  word.lower()
-    TM = 0
+    TM = Decimal(0)
     for thread in topic_cluster.keys():
         T_tu = topic_importance(thread)
         count = 0

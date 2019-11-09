@@ -82,7 +82,7 @@ def quotation_measure(word):
     This method takes in a word and returns the expected value of quotation measures for the word from all the comments written on the blog post.
     """
     word = word.lower()
-    QM = 0
+    QM = Decimal(0)
     
     for sentence in comments:
         D_ci = quotation_degree(sentence)
