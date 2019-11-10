@@ -91,7 +91,7 @@ def scrapeParent():
 
     blog_url = []
     if args.page:
-        for i in range(2):
+        for i in range(int(args.page)):
             response = requests.get(url + str(int(args.page)) + '/')
 
             data = response.text
@@ -108,7 +108,7 @@ def scrapeParent():
             
             for num in nums:
                 comment_count.append(num.text)
-            if i != 0:
+            if i == 0:
             #threshold for comment extraction of a given blog    
                 for _, (link, count) in enumerate(zip(bookmarks, comment_count)):
                     if int(str(count)) > 70 :
