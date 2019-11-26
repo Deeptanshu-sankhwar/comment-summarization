@@ -3,4 +3,3 @@ beta = 0.33
 gamma = 0.33
 topic_similarity = 0.5
 tau = 2
-selection_threshold = 0.00025

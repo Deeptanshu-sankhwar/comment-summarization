@@ -5,6 +5,18 @@ import config
 import os
 import nltk.data
 import time
+from decimal import Decimal
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+	'-f',
+	'--factor',
+	default = 1,
+	help = 'factor of threshold for summary'
+	)
+args = parser.parse_args()
+
 
 start_time = time.time()
 #fetching scraped txt blogs
@@ -13,6 +25,9 @@ for file in os.listdir():
     if file.endswith(".txt"):
         blogs.append(str(file))
 
+sentence_sbs = dict()
+
+overall_sbs = 0
 tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 for blog in blogs:
     file = open(blog)
@@ -26,8 +41,14 @@ for blog in blogs:
         print("Old sentence : " + sentence)
         sbs_score = rep_score_sentence(sentence, config.tau)
         file.write(str(sbs_score) + '\n')
-        if sbs_score > config.selection_threshold:
-            summary.write(sentence)
+        overall_sbs = overall_sbs + sbs_score
+        sentence_sbs[sentence] = sbs_score
+        
+    threshold = overall_sbs/len(sentences)
+    
+    for key in sentence_sbs:
+    	if sentence_sbs[key] >= Decimal(args.factor) * threshold:
+    		summary.write(key)
 
     summary.close()
     file.close()

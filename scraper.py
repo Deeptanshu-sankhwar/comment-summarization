@@ -91,7 +91,7 @@ def scrapeParent():
 
     blog_url = []
     if args.page:
-        for i in range(int(args.page)):
+        for i in range(1):
             response = requests.get(url + str(int(args.page)) + '/')
 
             data = response.text
@@ -100,7 +100,7 @@ def scrapeParent():
             bookmarks = []
             for tag in tags:
                 bookmarks.append(tag.get('href'))
-            if i == 0:
+            if args.page == 1:
                 bookmarks.pop(0)
             
             comment_count = []
