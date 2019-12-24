@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>greet app</title>
+</head>
+<body>
+	<input id="name-input" type="text"/>
+	<button id="name-button">Submit Name</button>
+	<p id="summary"></p>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	
+	<script>
+		$("#name-button").click(function(event)	{
+			let message = {
+				name : $("#name-input").val()
+			}
+			$.post("http://192.168.43.51:5000/summary", JSON.stringify(message), function(response)	{
+				$("#summary").text(response.summary);
+				console.log(response);
+			});
+		});
+	</script>
+</body>
+</html>
