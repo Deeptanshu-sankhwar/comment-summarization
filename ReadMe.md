@@ -1,4 +1,4 @@
-# Comment Content Summarization
+# Comment Content Summarization Project
 Comments-Oriented Blog Summarization by Sentence Extraction
 
 ## Getting Started
