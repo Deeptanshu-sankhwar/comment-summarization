@@ -94,7 +94,7 @@ python-apt==1.9.0+ubuntu1
 python-dateutil==2.7.3
 python-debian==0.1.36
 pytz==2019.2
-pyxdg==0.25
+pyxdg==0.26
 PyYAML==5.1.2
 pyzmq==18.1.1
 radio==0.0.11
