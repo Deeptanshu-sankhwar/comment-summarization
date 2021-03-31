@@ -56,7 +56,7 @@ librosa==0.7.1
 llvmlite==0.30.0
 lockfile==0.12.2
 louis==3.10.0
-lxml==4.4.1
+lxml==4.6.3
 macaroonbakery==1.2.3
 Mako==1.0.7
 Markdown==3.1.1
