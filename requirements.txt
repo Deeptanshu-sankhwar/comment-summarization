@@ -68,7 +68,7 @@ multiprocess==0.70.9
 netifaces==0.10.4
 nltk==3.4.5
 numba==0.46.0
-numpy==1.17.4
+numpy==1.22.0
 oauthlib==2.1.0
 olefile==0.46
 opencv-python==4.1.2.30
