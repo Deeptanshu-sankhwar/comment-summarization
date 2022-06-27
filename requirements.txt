@@ -98,7 +98,7 @@ pyxdg==0.25
 PyYAML==5.1.2
 pyzmq==18.1.1
 radio==0.0.11
-reportlab==3.5.23
+reportlab==3.5.55
 requests==2.21.0
 requests-unixsocket==0.1.5
 resampy==0.2.2
