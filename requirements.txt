@@ -76,7 +76,7 @@ pandas==0.25.3
 paramiko==2.6.0
 pexpect==4.6.0
 Pillow==6.1.0
-protobuf==3.6.1
+protobuf==3.18.3
 pycairo==1.16.2
 pycparser==2.19
 pycrypto==2.6.1
