@@ -114,7 +114,7 @@ soupsieve==1.9.5
 system-service==0.3
 systemd-python==234
 tensorboard==1.14.0
-tensorflow==1.14.0
+tensorflow==2.9.3
 tensorflow-estimator==1.14.0
 termcolor==1.1.0
 torbrowser-launcher==0.3.2
